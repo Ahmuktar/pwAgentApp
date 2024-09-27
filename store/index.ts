@@ -7,7 +7,9 @@ export const useUserStore = create(
     (set) => ({
       user: null,
       token: null,
+      firstLaunch: true,
       setUser: (user) => set({ user }),
+      setFirstLaunch: (firstLaunch) => set({ firstLaunch }),
       setToken: (token) => set({ token }),
       logOut: () => set({ user: null, token: null }),
     }),

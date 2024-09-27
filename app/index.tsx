@@ -1,4 +1,4 @@
-import { Image, ScrollView, Text, View } from "react-native";
+import { ActivityIndicator, Image, ScrollView, Text, View } from "react-native";
 import React, { useEffect } from "react";
 import { Redirect, router } from "expo-router";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -8,7 +8,15 @@ import { images } from "@/constants";
 import { useUserStore } from "@/store";
 
 const App = () => {
-  const { user, token, setToken } = useUserStore();
+  const { firstLaunch, setFirstLaunch } = useUserStore();
+  if (!firstLaunch) {
+    return <ActivityIndicator size="large" />;
+  }
+
+  const handlePress = () => {
+    setFirstLaunch(false);
+    router.push("/(auth)/sign-in");
+  };
 
   return (
     <SafeAreaView className="h-full">
@@ -40,7 +48,7 @@ const App = () => {
 
           <CustomButton
             title="Continue with Email"
-            handlePress={() => router.push("/sign-in")}
+            handlePress={handlePress}
             containerStyles="w-full mt-10"
             textStyles="text-white"
           />
